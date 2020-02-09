@@ -11,4 +11,12 @@
 |
 */
 
-Route::resource('/roles', 'RoleController');
+Route::prefix('backend')->group(function () {
+
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    });
+
+    Route::resource('/roles', 'RoleController');
+
+});

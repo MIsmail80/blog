@@ -16,7 +16,7 @@ class RoleController extends Controller
     {
         $roles = Role::all();
 
-        return view('roles.index', compact('roles'));
+        return view('admin.roles.index', compact('roles'));
     }
 
     /**
@@ -26,7 +26,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        return view('admin.roles.create');
     }
 
     /**
@@ -38,14 +38,14 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'roleName' => 'required|email'
+            'roleName' => 'required'
         ]);
 
         $newRole = new Role;
         $newRole->name = $request->get('roleName');
         $newRole->save();
 
-        return redirect('roles');
+        return redirect('backend/roles');
     }
 
     /**
@@ -67,7 +67,9 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $role = Role::find($id);
+
+        return view('admin.roles.edit', compact('role'));
     }
 
     /**
@@ -79,7 +81,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::find($id);
+        $role->name = $request->get('roleName');
+        $role->save();
+
+        return redirect('backend/roles');
     }
 
     /**
@@ -90,6 +96,11 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        /* $role = Role::find($id);
+        $role->delete(); */
+
+        Role::destroy($id);
+
+        return redirect('backend/roles');
     }
 }

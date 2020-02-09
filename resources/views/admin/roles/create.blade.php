@@ -1,8 +1,14 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('content')
 
-<form method="POST" action="{{url('roles')}}">
+<div class="mt-4 d-flex justify-content-between align-items-center">
+    <h1>New Role</h1>
+</div>
+
+<hr />
+
+<form method="POST" action="{{url('backend/roles')}}">
     @csrf
     <div class="form-group">
         <label>Role Name</label>
