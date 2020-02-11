@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('website.layouts.master')
 
 @section('banner')
 <section class="post_slider_area">

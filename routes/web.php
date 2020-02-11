@@ -11,12 +11,12 @@
 |
 */
 
-Route::prefix('backend')->group(function () {
+Route::get('/', 'HomeController@homePage');
 
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    });
+Route::prefix('admin')->group(function () {
+    Route::get('dashboard', 'DashboardController@dashboard');
 
     Route::resource('/roles', 'RoleController');
-
+    
+    Route::resource('/categories', 'CategoryController');
 });

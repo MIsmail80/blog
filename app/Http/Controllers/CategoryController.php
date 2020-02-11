@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $categories = Category::paginate(5);
 
-        return view('admin.roles.index', compact('roles'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -26,7 +26,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('admin.roles.create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -38,14 +38,14 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'roleName' => 'required'
+            'categoryName' => 'required'
         ]);
 
-        $newRole = new Role;
-        $newRole->name = $request->get('roleName');
-        $newRole->save();
+        $newCategory = new Category;
+        $newCategory->name = $request->categoryName;
+        $newCategory->save();
 
-        return redirect('admin/roles');
+        return redirect('admin/categories');
     }
 
     /**
@@ -67,9 +67,9 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
+        $category = Category::find($id);
 
-        return view('admin.roles.edit', compact('role'));
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -81,11 +81,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $role = Role::find($id);
-        $role->name = $request->get('roleName');
-        $role->save();
+        $category = Category::find($id);
+        $category->name = $request->categoryName;
+        $category->save();
 
-        return redirect('admin/roles');
+        return redirect('admin/categories');
     }
 
     /**
@@ -96,11 +96,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        /* $role = Role::find($id);
-        $role->delete(); */
+        Category::destroy($id);
 
-        Role::destroy($id);
-
-        return redirect('admin/roles');
+        return redirect('admin/categories');
     }
 }
