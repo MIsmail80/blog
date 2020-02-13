@@ -11,4 +11,16 @@
 |
 */
 
-Route::get('/', 'HomeController@homePage');
+Route::prefix('admin')->group(function () {
+    Route::get('login', 'LoginController@index');
+
+    Route::post('login', 'LoginController@authenticate');
+    
+    Route::get('logout', 'LoginController@logout');
+    
+    Route::get('dashboard', 'DashboardController@dashboard');
+
+    Route::resource('/roles', 'RoleController');
+
+    Route::resource('/categories', 'CategoryController');
+});
