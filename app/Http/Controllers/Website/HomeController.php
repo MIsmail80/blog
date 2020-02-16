@@ -10,8 +10,6 @@ class HomeController extends Controller
 {
     public function homePage()
     {
-        $categories = Category::all();
-
-        return view('website.index', compact('categories'));
+        return view('website.index');
     }
 }

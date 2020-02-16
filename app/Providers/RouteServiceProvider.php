@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers\Website';
+    protected $namespaceWebsite = 'App\Http\Controllers\Website';
     protected $namespaceAdmin = 'App\Http\Controllers\Admin';
 
     /**
@@ -47,7 +47,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
         
-        $this->mapadminRoutes();
+        $this->mapAdminRoutes();
     }
 
     /**
@@ -60,7 +60,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
+             ->namespace($this->namespaceWebsite)
              ->group(base_path('routes/web.php'));
     }
 

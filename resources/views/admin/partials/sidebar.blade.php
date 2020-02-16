@@ -18,7 +18,9 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            {{Auth::user()->email}}
+            @if (Auth::check())
+                {{Auth::user()->email}}
+            @endif            
         </div>
     </nav>
 </div>

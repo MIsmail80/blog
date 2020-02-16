@@ -18,19 +18,22 @@
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                             aria-haspopup="true" aria-expanded="false">Categories</a>
                         <ul class="dropdown-menu">
-                            
+
                             @foreach ($categories as $category)
-                                <li class="nav-item">
-                                    <a class="nav-link" href="elements.html">
-                                        {{$category->name}}
-                                    </a>
-                                </li>
-                            @endforeach                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="elements.html">
+                                    {{$category->name}}
+                                </a>
+                            </li>
+                            @endforeach
 
                         </ul>
                     </li>
 
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+
+                    <li class="nav-item mr-auto"><a class="nav-link" href="{{url('/login')}}">Login</a></li>
+                    <li class="nav-item mr-auto"><a class="nav-link" href="{{url('/register')}}">New User</a></li>
                 </ul>
 
             </div>
