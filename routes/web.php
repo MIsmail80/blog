@@ -13,4 +13,10 @@
 
 Route::get('/', 'HomeController@homePage');
 
-Route::get('/register', 'UserController@register');
+Route::get('/login', 'UserController@getLogin');
+Route::post('/login', 'UserController@postLogin');
+
+Route::get('/logout', 'UserController@logout');
+
+Route::get('/register', 'UserController@getRegister');
+Route::post('/register', 'UserController@postRegister');

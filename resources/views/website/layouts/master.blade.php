@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{asset('vendors/nice-select/css/nice-select.css')}}">
     <link rel="stylesheet" href="{{asset('vendors/animate-css/animate.css')}}">
     <link rel="stylesheet" href="{{asset('vendors/jquery-ui/jquery-ui.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <!-- main css -->
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
@@ -282,6 +283,12 @@
     <script src="{{asset('js/jquery.ajaxchimp.min.js')}}"></script>
     <script src="{{asset('js/mail-script.js')}}"></script>
     <script src="{{asset('js/theme.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        $(function(){
+            $(".flatpicker").flatpickr();
+        });
+    </script>
 </body>
 
 </html>

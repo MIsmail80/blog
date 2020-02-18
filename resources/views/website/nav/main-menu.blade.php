@@ -32,8 +32,14 @@
 
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
 
+                    @if (Auth::check())                    
+                    <li class="nav-item mr-auto"><a class="nav-link">Welcome Back {{Auth::user()->name}}</a></li>
+                    <li class="nav-item mr-auto"><a class="nav-link" href="{{url('/logout')}}">Logout</a></li>
+                    @else
                     <li class="nav-item mr-auto"><a class="nav-link" href="{{url('/login')}}">Login</a></li>
                     <li class="nav-item mr-auto"><a class="nav-link" href="{{url('/register')}}">New User</a></li>
+                    @endif
+
                 </ul>
 
             </div>
