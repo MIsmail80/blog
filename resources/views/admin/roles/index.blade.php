@@ -23,9 +23,9 @@
             <th scope="row">{{$role->id}}</th>
             <td>{{$role->name}}</td>
             <td>
-                <a class="btn btn-sm btn-warning" href="{{url('backend/roles/'.$role->id.'/edit')}}">Edit</a>
+                <a class="btn btn-sm btn-warning" href="{{url('admin/roles/'.$role->id.'/edit')}}">Edit</a>
 
-                <form method="POST" action="{{url('backend/roles/'.$role->id)}}">
+                <form method="POST" action="{{url('admin/roles/'.$role->id)}}">
                     @method('DELETE')@csrf
                     <button class="btn btn-sm btn-danger">Delete</button>
                 </form>

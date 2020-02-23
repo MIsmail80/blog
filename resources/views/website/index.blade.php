@@ -86,3 +86,7 @@
 @section('content')
     This is index page
 @endsection
+
+@section('sidebar')
+    @include('website.nav.main-sidebar')
+@endsection

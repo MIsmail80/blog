@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Image;
 
 class UserController extends Controller
 {
@@ -39,7 +41,10 @@ class UserController extends Controller
 
             $path = $folder . $fileName;
 
-            $photoFile->move($folder, $fileName);
+            // $photoFile->move($folder, $fileName);
+
+            // Save photo by intervention package
+            Image::make($photoFile)->resize(300, 200)->save($path);
         }
 
         // Create new user
@@ -83,5 +88,52 @@ class UserController extends Controller
         Auth::logout();
 
         return redirect('/');
+    }
+
+    public function getProfile()
+    {
+        $user = Auth::user();
+
+        return view('website.users.profile', compact('user'));
+    }
+
+    public function saveProfile()
+    {
+        $this->validate(request(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'birth_at' => 'required',
+            'gender' => 'required',
+            'photo' => 'max:1024',
+        ]);
+
+        // Upload photo
+        if (request()->hasFile('photo')) {
+            $photoFile = request()->file('photo');
+
+            $ext = $photoFile->extension();
+
+            $fileName = Str::random(5) . '.' . $ext;
+
+            $folder = "uploads/";
+
+            $path = $folder . $fileName;
+
+            $photoFile->move($folder, $fileName);
+        }
+
+        // Create new user
+        $user = Auth::user();
+        $user->name = request('name');
+        $user->email = request('email');
+        $user->birth_at = request('birth_at');
+        $user->gender = request('gender');
+        if (isset($path)) {
+            File::delete(public_path($user->image));
+            $user->image = $path;
+        }
+        $user->save();
+
+        return redirect('profile');
     }
 }

@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Website;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -14,7 +18,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $posts = Post::where('user_id', '=', Auth::id())->paginate(10);
+
+        return view('website.posts.index', compact('posts'));
     }
 
     /**
@@ -24,7 +30,6 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -55,9 +60,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('website.posts.edit', compact('post'));
     }
 
     /**
@@ -67,9 +72,33 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        // Upload photo
+        if (request()->hasFile('photo')) {
+            $photoFile = request()->file('photo');
+
+            $ext = $photoFile->extension();
+
+            $fileName = Str::random(5) . '.' . $ext;
+
+            $folder = "uploads/";
+
+            $path = $folder . $fileName;
+
+            $photoFile->move($folder, $fileName);
+        }
+
+
+        $post->title = request('title');
+        $post->content = $request->get('content');
+        if (isset($path)) {
+            File::delete(public_path($post->image));
+            $post->image = $path;
+        }
+        $post->save();
+
+        return redirect('posts');
     }
 
     /**
@@ -80,6 +109,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::destroy($id);
+
+        return redirect('posts');
     }
 }
