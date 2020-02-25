@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Website;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewPostRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -18,7 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('user_id', '=', Auth::id())->paginate(10);
+        $posts = Post::with('categories')->where('user_id', '=', Auth::id())->paginate(10);
 
         return view('website.posts.index', compact('posts'));
     }
@@ -30,6 +32,9 @@ class PostController extends Controller
      */
     public function create()
     {
+        $cats = Category::all();
+
+        return view('website.posts.create', compact('cats'));
     }
 
     /**
@@ -38,9 +43,38 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewPostRequest $request)
     {
-        //
+        // Upload photo
+        if (request()->hasFile('photo')) {
+            $photoFile = request()->file('photo');
+
+            $ext = $photoFile->extension();
+
+            $fileName = Str::random(5) . '.' . $ext;
+
+            $folder = "uploads/";
+
+            $path = $folder . $fileName;
+
+            $photoFile->move($folder, $fileName);
+        }
+
+        // Save post
+        $post = new Post;
+        $post->title = request('title');
+        $post->content = request('content');
+        $post->image = $path;
+        $post->views = 0;
+        $post->likes = 0;
+        $post->featured = 0;
+        $post->user_id = Auth::id();
+        $post->save();
+
+        // Attache categories
+        $post->categories()->sync(request('cats'));
+
+        return redirect('posts');
     }
 
     /**
@@ -62,7 +96,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('website.posts.edit', compact('post'));
+        $cats = Category::all();
+
+        $post->load('categories');
+
+        return view('website.posts.edit', compact('post', 'cats'));
     }
 
     /**
@@ -97,6 +135,9 @@ class PostController extends Controller
             $post->image = $path;
         }
         $post->save();
+
+        // Attache categories
+        $post->categories()->sync(request('cats'));
 
         return redirect('posts');
     }

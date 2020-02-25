@@ -13,6 +13,8 @@
 
 Route::get('/', 'HomeController@homePage');
 
+Route::get('/category/{id}/posts', 'HomeController@getCategoryPosts');
+
 Route::get('/profile', 'UserController@getProfile');
 Route::post('/save-profile', 'UserController@saveProfile');
 

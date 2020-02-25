@@ -14,6 +14,11 @@
                         <p>Posts</p>
                     </a>
                 </li>
+                <li>
+                    <a href="{{url('posts/create')}}" class="d-flex justify-content-between">
+                        <p>New Post</p>
+                    </a>
+                </li>
             </ul>
             <div class="br"></div>
         </aside>
