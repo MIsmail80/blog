@@ -51,7 +51,8 @@ class UserController extends Controller
         $newUser = new User();
         $newUser->name = request('name');
         $newUser->email = request('email');
-        $newUser->password = Hash::make(request('password'));
+        $newUser->password = request('password');
+        // $newUser->password = Hash::make(request('password'));
         $newUser->birth_at = request('birth_at');
         $newUser->gender = request('gender');
         $newUser->image = $path;

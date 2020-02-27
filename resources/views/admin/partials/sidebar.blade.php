@@ -13,6 +13,11 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Categories
                 </a>
+
+                <a class="nav-link" href="{{route('all.posts')}}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Posts
+                </a>
                 
             </div>
         </div>

@@ -25,7 +25,7 @@
 
         <div id="layoutSidenav_content">
             <main>
-                <div class="container-fluid">                                      
+                <div class="container-fluid">
                     @yield('content')
                 </div>
             </main>
@@ -39,6 +39,30 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
     <script src="{{asset('admin/js/scripts.js')}}"></script>
+    <script>
+        $('.post').click(function () {
+            let postID = $(this).val();
+            4
+            let status = $(this).is(":checked") ? 1 : 0;
+
+            $.ajax({
+                type: "POST",
+                url: "{{url('admin/featured-post')}}",
+                data: {
+                    post_id: postID,
+                    status: status
+                },
+                success(data) {
+                    console.log(data);
+                    alert(data);
+                },
+                error(data){
+
+                }
+            });
+        });
+
+    </script>
 </body>
 
 </html>

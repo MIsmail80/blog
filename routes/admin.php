@@ -23,6 +23,10 @@ Route::prefix('admin')->group(function () {
     
         Route::get('dashboard', 'DashboardController@dashboard');
 
+        Route::get('posts', 'PostController@index')->name('all.posts');
+
+        Route::post('featured-post', 'PostController@setFeaturedPost');
+
         Route::resource('/roles', 'RoleController');
 
         Route::resource('/categories', 'CategoryController');

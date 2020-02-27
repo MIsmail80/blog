@@ -11,6 +11,12 @@
 |
 */
 
+use App\Models\User;
+
+Route::get('test', function () {
+    return User::all();
+});
+
 Route::get('/', 'HomeController@homePage');
 
 Route::get('/category/{id}/posts', 'HomeController@getCategoryPosts');
