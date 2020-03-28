@@ -11,11 +11,28 @@
 |
 */
 
-use App\Models\User;
+use App\Models\Comment;
 
 Route::get('test', function () {
-    return User::all();
+    $postComments = Comment::where('post_id', 1)->where('comment_id', 0)->get();
+    echo showCommentsTree($postComments);
 });
+
+function showCommentsTree($comments)
+{
+    $output = "<ul>";
+
+    foreach ($comments as $comment) {
+        $output .= "<li>{$comment->comment}</li>";
+        if ($comment->replies()->exists()) {
+            $output .= showCommentsTree($comment->replies);
+        }
+    }
+
+    $output .= "</ul>";
+
+    return $output;
+}
 
 Route::get('/', 'HomeController@homePage');
 
